@@ -24,11 +24,12 @@ function App() {
     console.log(newData)
     setCards([...cards, newData])
   }
-  const bottomRef = useRef(null);
+
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({
+    window.scrollTo({
+      top: document.body.scrollHeight,
       behavior: "smooth"
-    });
+    })
   }, [cards]);
 
   return (
@@ -45,7 +46,6 @@ function App() {
           }
         </div>
       </div>
-      <div ref={bottomRef}></div>
     </>
   )
 }
