@@ -8,8 +8,10 @@ const catImgAPIURL = "https://api.thecatapi.com/v1/images/search"
 function App() {
 
   const [cards, setCards] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const updateFromAPI = async () => {
+    setLoading(true)
     let resp = await fetch(catFactAPIURL)
     let respJson = await resp.json()
     let fct = respJson.fact
@@ -23,6 +25,7 @@ function App() {
     }
     console.log(newData)
     setCards([...cards, newData])
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -36,7 +39,7 @@ function App() {
     <>
       <Navbar/>
       <div className="page flex flex-col w-screen relative">
-        <button onClick={async () => { updateFromAPI(cards, setCards) }} className="next bg-purple-800 bottom-3 left-1/2 -translate-x-1/2 font-bold fixed z-10 text-white rounded-[5px] p-5 w-80 text-[30px] shadow-[10px_0px_15px_rgba(0,0,0,0.3)] flex items-center justify-center transition-all hover:bg-purple-600 hover:scale-105 cursor-pointer">Get Cat Fact!</button>
+        <button onClick={async () => { updateFromAPI(cards, setCards) }} disabled={loading} className="next bg-purple-800 bottom-3 left-1/2 -translate-x-1/2 font-bold fixed z-10 text-white rounded-[5px] p-5 w-80 text-[30px] shadow-[10px_0px_15px_rgba(0,0,0,0.3)] flex items-center justify-center transition-all hover:bg-purple-600 hover:scale-105 cursor-pointer">Get Cat Fact!</button>
         <div ref={cards} className="w-screen flex justify-center flex-wrap">
 
           {
